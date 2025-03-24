@@ -10,10 +10,13 @@ This project implements a machine learning model to predict the number of passen
 - Handles outlier detection and time-based data validation.
 - Implements grouping of predictions by `trip_id_unique_station`.
   
-## Getting Started
-Ensure you have the following dependencies installed:
-
-```bash
-pip install numpy pandas scikit-learn tqdm joblib
-
+## Libraries
+- matplotlib
+- pandas
+- seaborn
+- sklearn
+- numpy
+- tqdm
+- joblib
+- datetime
 
