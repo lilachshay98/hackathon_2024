@@ -8,17 +8,8 @@ This project implements a machine learning model to predict the number of passen
 - Predictions are stored in a CSV file.
 - Evaluates performance using Mean Squared Error (MSE).
 - Handles outlier detection and time-based data validation.
-  
-## Libraries
-- matplotlib
-- pandas
-- seaborn
-- sklearn
-- numpy
-- tqdm
-- joblib
-- datetime
 
+  
 ## Project Structure
 ```
 ├── Data_Analysis
@@ -59,3 +50,14 @@ This project implements a machine learning model to predict the number of passen
 ├── second_model_baseline.py
 └── train_bus_schedule_filtered.csv
 ```
+  
+## Libraries Used
+- matplotlib
+- pandas
+- seaborn
+- sklearn
+- numpy
+- tqdm
+- joblib
+- datetime
+- typing
