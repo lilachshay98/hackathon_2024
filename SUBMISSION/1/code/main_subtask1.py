@@ -2,13 +2,14 @@ import logging
 from joblib import load
 import csv
 import math
-import  first_baseline
+# import first_baseline
 from joblib import load
 import numpy as np
 from tqdm import tqdm
 import preprocessing
 import pandas as pd
 from datetime import datetime
+
 pd.options.mode.copy_on_write = True
 from joblib import dump
 import pandas as pd
@@ -17,7 +18,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 from argparse import ArgumentParser
 
-def get_baseline_model (df):
+
+def get_baseline_model(df):
     df['time_in_station (sec)'] = 0
 
     for index, row in tqdm(df.iterrows(), total=df.shape[0]):
@@ -26,21 +28,21 @@ def get_baseline_model (df):
             df.iloc[index, df.columns.get_loc("door_closing_time")] = row["arrival_time"]
             row["door_closing_time"] = row["arrival_time"]
 
-
         # close_after_arr
         if not is_time_after(row["door_closing_time"], row["arrival_time"]):
-            df.iloc[index, df.columns.get_loc("door_closing_time")], df.iloc[index, df.columns.get_loc("arrival_time")] = row["arrival_time"], row[
+            df.iloc[index, df.columns.get_loc("door_closing_time")], df.iloc[
+                index, df.columns.get_loc("arrival_time")] = row["arrival_time"], row[
                 "door_closing_time"]
 
         # passenger_cont_is_int_pos
         if row["passengers_continue"] <= 0:
             df.iloc[index, df.columns.get_loc("passengers_continue")] = 0
 
-        df.iloc[index, df.columns.get_loc('time_in_station (sec)')] = time_difference(row["arrival_time"], row["door_closing_time"])
+        df.iloc[index, df.columns.get_loc('time_in_station (sec)')] = time_difference(row["arrival_time"],
+                                                                                      row["door_closing_time"])
         #
         # if index == 100:
         #     break
-
 
     # Define the features (independent variables) and target (dependent variable)
     # first_50_rows = df.head(50)
@@ -58,6 +60,7 @@ def get_baseline_model (df):
     model.fit(X_train_model, y_train)
     return model
 
+
 def is_time_after(time1, time2, time_format='%H:%M:%S'):
     try:
         t1 = datetime.strptime(time1, time_format)
@@ -66,11 +69,13 @@ def is_time_after(time1, time2, time_format='%H:%M:%S'):
     except ValueError:
         return False  # In case of invalid time format
 
+
 def time_difference(time1, time2, time_format='%H:%M:%S'):
     t1 = datetime.strptime(time1, time_format)
     t2 = datetime.strptime(time2, time_format)
     delta = t2 - t1
     return int(delta.total_seconds())
+
 
 def preprocess_data(df):
     df = df.drop("station_name", axis=1)
@@ -109,6 +114,7 @@ def preprocess_data(df):
 
         return df
 
+
 def get_df_for_test(df):
     df['time_in_station (sec)'] = 0
 
@@ -119,16 +125,20 @@ def get_df_for_test(df):
             row["door_closing_time"] = row["arrival_time"]
 
         if not preprocessing.is_time_after(row["door_closing_time"], row["arrival_time"]):
-            df.iloc[index, df.columns.get_loc("door_closing_time")], df.iloc[index, df.columns.get_loc("arrival_time")] = row["arrival_time"], row[
+            df.iloc[index, df.columns.get_loc("door_closing_time")], df.iloc[
+                index, df.columns.get_loc("arrival_time")] = row["arrival_time"], row[
                 "door_closing_time"]
 
         # passenger_cont_is_int_pos
         if row["passengers_continue"] <= 0:
             df.iloc[index, df.columns.get_loc("passengers_continue")] = 0
 
-        df.iloc[index, df.columns.get_loc('time_in_station (sec)')] = preprocessing.time_difference(row["arrival_time"], row["door_closing_time"])
+        df.iloc[index, df.columns.get_loc('time_in_station (sec)')] = preprocessing.time_difference(row["arrival_time"],
+                                                                                                    row[
+                                                                                                        "door_closing_time"])
 
-        return df[['time_in_station (sec)', "passengers_continue", "door_closing_time", 'trip_id_unique_station', "station_id"]]
+        return df[['time_in_station (sec)', "passengers_continue", "door_closing_time", 'trip_id_unique_station',
+                   "station_id"]]
 
 
 """
@@ -187,7 +197,6 @@ if __name__ == '__main__':
         model.fit(X_train_model, y_train_model)
         model_per_stations_dict[key] = model
 
-
     # 4. load the test set (args.test_set)
     df_test = pd.read_csv(args.test_set, encoding="ISO-8859-8")
 
@@ -237,4 +246,3 @@ if __name__ == '__main__':
     # 7. save the predictions to args.out
     logging.info("predictions saved to {}".format(args.out))
     df_predictions.to_csv(args.out, index=False)
-

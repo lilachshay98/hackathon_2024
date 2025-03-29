@@ -1,9 +1,8 @@
-
 from argparse import ArgumentParser
 import logging
 import csv
 import math
-import  first_baseline
+# import  first_baseline
 from joblib import load
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
@@ -21,6 +20,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 import pickle
+
+
 def is_time_after(time1, time2, time_format='%H:%M:%S'):
     try:
         t1 = datetime.strptime(time1, time_format)
@@ -29,14 +30,15 @@ def is_time_after(time1, time2, time_format='%H:%M:%S'):
     except ValueError:
         return False  # In case of invalid time format
 
+
 def time_difference(time1, time2, time_format='%H:%M:%S'):
     t1 = datetime.strptime(time1, time_format)
     t2 = datetime.strptime(time2, time_format)
     delta = t2 - t1
     return int(delta.total_seconds())
 
-def preprocess_data(df):
 
+def preprocess_data(df):
     df['distance_between_stations'] = 0
     df['duration_between_stations'] = 0
     df = df.loc[df['arrival_is_estimated'] == False]
@@ -52,8 +54,9 @@ def preprocess_data(df):
         if row2["passengers_continue"] <= 0:
             df.iloc[i + 1, df.columns.get_loc("passengers_continue")] = 0
 
-        df.iloc[i + 1, df.columns.get_loc('duration_between_stations')] = preprocessing.time_difference(row1["arrival_time"],
-                                                                                      row2["arrival_time"])
+        df.iloc[i + 1, df.columns.get_loc('duration_between_stations')] = preprocessing.time_difference(
+            row1["arrival_time"],
+            row2["arrival_time"])
 
         # Example usage
         coord1 = (row1["latitude"], row1["longitude"])  # Warsaw, Poland
@@ -63,6 +66,7 @@ def preprocess_data(df):
         scaler = StandardScaler()
         df['duration_between_stations'] = scaler.fit_transform(df[['duration_between_stations']])
         return df
+
 
 def get_df_for_test(df):
     df['distance_between_stations'] = 0
@@ -141,7 +145,6 @@ if __name__ == '__main__':
 
     # X_y_train_grouped = X_train.groupby('trip_id_unique')
 
-
     # 4. load the test set (args.test_set)
     df_test = pd.read_csv(args.test_set, encoding="ISO-8859-8")
 
@@ -166,7 +169,6 @@ if __name__ == '__main__':
 
     df_predictions = pd.DataFrame(columns=['trip_id_unique', 'trip_duration_in_minutes'])
     for key, group in tqdm(X_y_test_grouped):
-
         X_test_model = group[['distance_between_stations', 'passengers_up']]
         # y_test_model = group['passengers_up']
         y_duration_predict = model.predict(X_test_model)
@@ -185,4 +187,3 @@ if __name__ == '__main__':
     # 7. save the predictions to args.out
     logging.info("predictions saved to {}".format(args.out))
     df_predictions.to_csv(args.out, index=False)
-

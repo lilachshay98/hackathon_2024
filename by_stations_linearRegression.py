@@ -50,8 +50,6 @@ def get_df_for_test(df):
 
 if __name__ == '__main__':
 
-    # baseline_model = first_baseline.get_baseline_model()
-    # dump(baseline_model, 'linear_regression_model.joblib')
     baseline_model = load('linear_regression_model.joblib')
 
     # Replace 'path_to_file.csv' with the actual path to your CSV file
@@ -84,12 +82,8 @@ if __name__ == '__main__':
         model = LinearRegression()
         model.fit(X_train_model, y_train_model)
         model_per_stations_dict[key] = model
-        # i += 1
-        #
-        # if i == 5:
-        #     break
 
-    ########## PREDICTIONS ##########################
+    # predictions
     df_test = pd.read_csv(r'/Users/lilachshay/IML/hackathon_2024_public/train_bus_schedule_filtered.csv',
                           encoding="utf-8")
     X_test = get_df_for_test(df_test)

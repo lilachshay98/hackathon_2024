@@ -284,7 +284,7 @@ def rush_hour_graph(X: pd.DataFrame, output_path: str = ".") -> typing.NoReturn:
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("train_bus_schedule_filtered.csv")
+    df = pd.read_csv("/Users/lilachshay/IML/hackathon_2024_public/train_bus_schedule_filtered.csv")
     df.dropna()
 
     # Tasks - Part 3.1, 3.2
