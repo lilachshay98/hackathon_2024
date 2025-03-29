@@ -20,6 +20,7 @@ This project implements a machine learning model to predict the number of passen
 - datetime
 
 ## Project Structure
+```
 ├── Data_Analysis
 │   ├── DataAnalysis.py
 │   ├── README.md
@@ -57,3 +58,4 @@ This project implements a machine learning model to predict the number of passen
 ├── second_baseline.py
 ├── second_model_baseline.py
 └── train_bus_schedule_filtered.csv
+```
