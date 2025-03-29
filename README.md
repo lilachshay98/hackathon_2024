@@ -19,3 +19,5 @@ This project implements a machine learning model to predict the number of passen
 - joblib
 - datetime
 
+## Project Structure
+├── Data_Analysis │ ├── DataAnalysis.py │ ├── README.md │ ├── X_passengers_up.csv │ ├── X_trip_duration.csv │ ├── bus_column_description.md │ └── train_bus_schedule.csv ├── README.md ├── SUBMISSION │ ├── README.txt │ ├── USERS.txt │ ├── code │ │ ├── hackathon_code │ │ │ └── DataAnalysis.py │ │ ├── linear_regression_model.joblib │ │ ├── main_subtask1.py │ │ └── requirements.txt │ ├── linear_regression_model.joblib │ ├── predictions │ │ ├── passengers_up_predictions.csv │ │ └── trip_duration_predictions.csv │ └── project analysis and summary │ ├── conclusions_and_suggestions.pdf │ └── project overview.pdf ├── by_stations_linearRegression.py ├── example_files │ ├── y_importance_example.csv │ ├── y_match_example.csv │ ├── y_passengers_up_example.csv │ └── y_trip_duration_example.csv ├── linear_regression_model.joblib ├── main.py ├── passengers_up_predictions.csv ├── preprocessing.py ├── second_baseline.py ├── second_model_baseline.py └── train_bus_schedule_filtered.csv
