@@ -1,3 +1,22 @@
-In this directory you can find the data for both tasks presented in the hackathon. 
+  # Hackathon 2024 - Optimizing public Transportation
 
-It includes the training data, and also the test data that you are expected to submit your predictions on.
+This project implements a machine learning model to predict the number of passengers boarding a bus at each station. The model is trained using historical bus schedule data and employs linear regression for prediction. 
+
+## Features
+- Data preprocessing to handle missing and inconsistent values.
+- Linear regression models trained per station.
+- Predictions are stored in a CSV file.
+- Evaluates performance using Mean Squared Error (MSE).
+- Handles outlier detection and time-based data validation.
+- Implements grouping of predictions by `trip_id_unique_station`.
+  
+## Libraries
+- matplotlib
+- pandas
+- seaborn
+- sklearn
+- numpy
+- tqdm
+- joblib
+- datetime
+
