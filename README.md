@@ -8,7 +8,6 @@ This project implements a machine learning model to predict the number of passen
 - Predictions are stored in a CSV file.
 - Evaluates performance using Mean Squared Error (MSE).
 - Handles outlier detection and time-based data validation.
-- Implements grouping of predictions by `trip_id_unique_station`.
   
 ## Libraries
 - matplotlib

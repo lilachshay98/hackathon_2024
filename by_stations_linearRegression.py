@@ -1,17 +1,13 @@
-import csv
-import math
 from joblib import load
-
-import numpy as np
-from tqdm import tqdm
-import preprocessing
-import pandas as pd
-from datetime import datetime
-from joblib import dump
-import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
+from tqdm import tqdm
+
+import numpy as np
+import preprocessing
+import pandas as pd
+
 
 pd.options.mode.copy_on_write = True
 
@@ -52,7 +48,6 @@ if __name__ == '__main__':
 
     baseline_model = load('linear_regression_model.joblib')
 
-    # Replace 'path_to_file.csv' with the actual path to your CSV file
     df = pd.read_csv(r'/Users/lilachshay/IML/hackathon_2024_public/train_bus_schedule_filtered.csv',
                      encoding="utf-8")
 
@@ -95,6 +90,7 @@ if __name__ == '__main__':
     #
     X_y_test_grouped = X_y_test_sorted.groupby('station_id')
 
+    # preparing the ground truth pd
     # df_gold_standard = pd.DataFrame({
     #     'trip_id_unique_station': X_y_test_sorted["trip_id_unique_station"],
     #     'passengers_up': X_y_test_sorted["passengers_up"]
@@ -133,10 +129,14 @@ if __name__ == '__main__':
     df_predictions.to_csv('passengers_up_predictions.csv', index=False)
 
     # Evaluate the model
-    # mse = mean_squared_error(y_test, y_pred)
-    # mse_boarding = eval_boardings(df_predictions, df_gold_standard)
-    # print(f"MSE for boardings: {mse_boarding}")
+    # Prepare the ground truth (actual values)
+    df_gold_standard = df_test[['trip_id_unique_station', 'passengers_up']]
 
-    # print(f"Mean Squared Error: {mse}")
+    # Merge predictions with ground truth
+    df_combined = pd.merge(df_predictions, df_gold_standard, on='trip_id_unique_station')
 
-    # for index, row in tqdm(df.iterrows(), total=df.shape[0]):
+    # Compute MSE
+    mse_boarding = mean_squared_error(df_combined["passengers_up_x"], df_combined["passengers_up_y"])
+    print(f"MSE for boardings: {mse_boarding}")
+
+
